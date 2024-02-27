@@ -4,12 +4,18 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"id","username","age"})
+@ToString(of = {"id", "username", "age"})
+@NamedQuery(
+        name = "Member.findByUsername",
+        query = "select m from Member m where m.username = :username"
+)
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "member_id")
     private Long id;
     private String username;
@@ -26,7 +32,7 @@ public class Member {
     public Member(String username, int age, Team team) {
         this.username = username;
         this.age = age;
-        if (team != null){
+        if (team != null) {
             changeTeam(team);
         }
     }
