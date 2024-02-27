@@ -11,6 +11,7 @@ import study.datajpa.entity.Member;
 import study.datajpa.entity.Team;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @Transactional
@@ -46,5 +47,24 @@ class MemberRepositoryTest {
         for (MemberDto dto : memberDto) {
             System.out.println("dto = " + dto);
         }
+    }
+
+    @Test
+    public void returnType() {
+        Member member1 = new Member("member1");
+        Member member2 = new Member("member2");
+        Member member3 = new Member("member2");
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
+
+        List<Member> member = memberRepository.findListByUsername("member2");
+        System.out.println("member = " + member);
+
+        Member memberA = memberRepository.findMemberByUsername("member1");
+        System.out.println("memberA = " + memberA);
+
+        Optional<Member> memberB = memberRepository.findOptionalByUsername("m");
+        System.out.println("memberB = " + memberB);
     }
 }
